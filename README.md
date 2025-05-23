@@ -65,6 +65,7 @@ Dataset terbagi menjadi 2 yaitu place data dan place rating.
 | 12 | Unnamed: 12    | int64     |
 
 - Place rating memiliki 10000 baris dan 3 kolom tanpa missing value. Dataset ini berisikan nilai rating yang diberikan user X terhadap place Y, berikut adalah place rating info dan sampel data:
+  
 | No | Nama Kolom    | Tipe Data |
 |----|---------------|-----------|
 | 0  | User_Id       | int64     |
