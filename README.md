@@ -237,7 +237,8 @@ Interaksi dengan Sampel Input:
 Sistem merekomendasikan tempat berdasarkan pola interaksi pengguna sebelumnya, seperti tempat yang pernah dikunjungi atau diberi rating tinggi.
 
 **Top-N Recommendation Collaborative Filtering (Alternatif)**
-```Menampilkan rekomendasi untuk user: 75
+```
+Menampilkan rekomendasi untuk user: 75
 ===========================
 Tempat dengan rating tertinggi dari user:
 - Pulau Pramuka
