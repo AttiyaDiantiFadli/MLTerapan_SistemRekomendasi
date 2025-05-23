@@ -312,7 +312,7 @@ Model menunjukkan performa baik pada data pelatihan, dan performa yang masih dap
 
 Berikut adalah visualisasi proses pelatihan model berdasarkan metrik **MSE** dan **MAE** untuk data pelatihan dan validasi:
 
-![Grafik evaluasi training](evaluasi.png)
+![Grafik evaluasi training](img/evaluasi.png)
 
 **Interpretasi dari Grafik:**
 
