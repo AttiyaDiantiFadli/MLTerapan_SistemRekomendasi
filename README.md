@@ -172,10 +172,6 @@ Beberapa teknik data preparation yang digunakan antara lain:
 
 ## Modeling
 
-bantu saya membuat laporan berdasarkan file proyek yang saya lampirkan. laporan bagian modeling, buat markdown nya:
-
-## Modeling
-
 Pada tahap ini akan dibahas dua pendekatan utama yang digunakan dalam membangun sistem rekomendasi: **Content-Based Filtering** dan **Collaborative Filtering**. Masing-masing pendekatan memiliki parameter, kelebihan, dan kekurangan tersendiri. Berikut penjelasannya beserta potongan kode yang relevan.
 
 **Model Sistem Rekomendasi: Content-Based Filtering**
