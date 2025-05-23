@@ -201,6 +201,7 @@ Pengguna memilih tempat wisata yang disukai, sistem akan merekomendasikan tempat
 **Top-N Recommendation Content Based Filtering**
 
 - model_recommendations('Taman Hiburan')
+  
 | No |      Tempat Wisata      |
 |----|-------------------------|
 | 0  | Tugu Pal Putih Jogja    | 
@@ -210,6 +211,7 @@ Pengguna memilih tempat wisata yang disukai, sistem akan merekomendasikan tempat
 | 4  | Taman Pintar Yogyakarta |
   
 - model_recommendations('Budaya')
+  
 | No |          Tempat Wisata        |
 |----|-------------------------------|
 | 0  | Museum Kereta Ambarawa        | 
