@@ -345,7 +345,7 @@ $$
 - Val MAE: Stabil di sekitar 0.61, menandakan kemungkinan overfitting, karena model tidak memperbaiki kinerjanya terhadap data yang belum dilihat.
 
 >  **Catatan:**  
-> Evaluasi pada pendekatan Collaborative Filtering saat ini hanya dilakukan menggunakan **MAE selama proses pelatihan dan validasi**, **tanpa pengujian eksplisit terhadap test set** atau penggunaan metrik alternatif seperti **RMSE**. Implementasi metrik tambahan masih menjadi pekerjaan lanjutan.
+> Evaluasi pada pendekatan saat ini hanya dilakukan menggunakan **MAE selama proses pelatihan dan validasi**, **tanpa pengujian eksplisit terhadap test set** atau penggunaan metrik alternatif seperti **RMSE**. Implementasi metrik tambahan masih menjadi pekerjaan lanjutan.
 
 ###  Evaluasi Terhadap Business Understanding
 
