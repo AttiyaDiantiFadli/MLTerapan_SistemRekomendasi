@@ -360,7 +360,7 @@ $$
 
 ## Catatan untuk Pengembangan Lanjutan
 
-- Implementasi **evaluasi dengan test set** dan penggunaan metrik **RMSE** perlu ditambahkan untuk memperkuat validitas model Collaborative Filtering.
+- Implementasi **evaluasi dengan test set** dan penggunaan metrik **RMSE** perlu ditambahkan untuk memperkuat validitas model.
 - Seluruh metrik top-K untuk pendekatan Content-Based Filtering akan dihitung langsung dari notebook, agar evaluasi lebih komprehensif dan menghindari kesalahan manual.
 - Perlu dilakukan perbandingan performa antar pendekatan secara kuantitatif.
 
