@@ -141,12 +141,9 @@ Dua dataset utama, yaitu `tourism_with_id.csv` dan `tourism_rating.csv`, dibaca 
 Dalam dataset `tourism_with_id.csv` terdapat dua kolom kosong bernama `Unnamed: 11` dan `Unnamed: 12` yang tidak memiliki informasi. Kedua kolom ini dihapus menggunakan `drop()` karena tidak relevan terhadap tujuan analisis.
 
 1.3 **Menghapus Duplikat dan Missing Values**  
-Untuk menjaga integritas data, dilakukan penghapusan duplikasi baris dengan `drop_duplicates()` dan pembersihan nilai kosong dengan `dropna()`, terutama pada kolom `Time_Minutes` yang menjadi salah satu atribut penting.
+Dilakukan pemeriksaan terhadap data duplikat dan nilai kosong (missing values) untuk memastikan kualitas data sebelum diproses lebih lanjut. Data duplikat diidentifikasi dan dihapus berdasarkan kolom `Place_Id` menggunakan `drop_duplicates('Place_Id')` untuk menghindari redundansi tempat yang sama. Selain itu, hasil pengecekan dengan `isnull().sum()` menunjukkan bahwa tidak terdapat missing value pada dataset.
 
-1.4 **Konversi Tipe Data Tanggal**  
-Pada dataset `tourism_rating.csv`, kolom `Timestamp` dikonversi menjadi format `datetime` menggunakan `pd.to_datetime()` untuk memastikan konsistensi tipe data dan memberikan fleksibilitas apabila dilakukan analisis berbasis waktu.
-
-1.5 **Menggabungkan Dataset**  
+1.4 **Menggabungkan Dataset**  
 Kedua dataset digabungkan dengan `merge()` berdasarkan kolom `Place_Id`, sehingga informasi rating dari pengguna dapat dikaitkan langsung dengan atribut tempat wisata. Gabungan ini digunakan untuk pendekatan Content-Based Filtering dan juga sebagai dasar Collaborative Filtering.
 
 ### 2. Tahapan untuk Content-Based Filtering
@@ -154,12 +151,13 @@ Kedua dataset digabungkan dengan `merge()` berdasarkan kolom `Place_Id`, sehingg
 Pendekatan Content-Based Filtering merekomendasikan tempat wisata berdasarkan kemiripan atribut deskriptif (misalnya deskripsi teks) dari destinasi wisata.
 
 2.1 **TF-IDF Vectorization**  
-- Kolom `Description` dari dataset destinasi diubah menjadi representasi numerik menggunakan teknik TF-IDF (Term Frequency - Inverse Document Frequency) dengan `TfidfVectorizer` dari Scikit-learn.  
-- Hasil vektorisasi ini digunakan untuk menghitung **cosine similarity** antar tempat wisata berdasarkan deskripsi teks mereka.
+- Kolom `Category` dari dataset destinasi diubah menjadi representasi numerik menggunakan teknik TF-IDF (Term Frequency - Inverse Document Frequency) dengan `TfidfVectorizer` dari Scikit-learn.
+- Proses ini meliputi fit dan transform untuk menghasilkan vektor TF-IDF dalam bentuk matriks.
+- Matriks ini digunakan untuk menghitung **cosine similarity** antar tempat wisata, guna menentukan tingkat kemiripan antar destinasi berdasarkan informasi kategori mereka.
 
-2.2 **Encoding Place_Id**  
-- Setelah proses similarity dihitung, dilakukan encoding terhadap `Place_Id` menggunakan `LabelEncoder`.  
-- Proses ini penting untuk memetakan ID tempat wisata ke indeks numerik agar memudahkan pencocokan saat menghasilkan rekomendasi.
+2.2 **Penghitungan Similarity**  
+- Setelah matriks TF-IDF terbentuk, digunakan teknik **cosine similarity** untuk mengukur derajat kesamaan antar tempat wisata.
+- Hasil perhitungan similarity ini menjadi dasar dalam merekomendasikan destinasi yang mirip satu sama lain.
 
 ### 3. Tahapan untuk Collaborative Filtering
 
@@ -321,9 +319,7 @@ Top 10 rekomendasi tempat wisata:
 
 ## Evaluation
 
-Pada bagian ini dilakukan evaluasi terhadap kedua pendekatan model rekomendasi: **Collaborative Filtering dengan TensorFlow** dan **Content-Based Filtering**. Metrik yang digunakan menyesuaikan karakteristik masing-masing pendekatan.
-
-### Collaborative Filtering – Evaluasi Model TensorFlow
+Pada bagian ini dilakukan evaluasi terhadap kedua pendekatan model rekomendasi **Collaborative Filtering dengan TensorFlow** dan **Content-Based Filtering**. Metrik yang digunakan menyesuaikan karakteristik masing-masing pendekatan.
 
 **Metrik Evaluasi: Mean Absolute Error (MAE)**
 
@@ -342,39 +338,14 @@ $$
 
 ![Grafik evaluasi training](img/evaluasi.png)
 
-**Interpretasi Grafik MAE:**
-- MAE pada data pelatihan (train MAE) terus menurun, menandakan bahwa model berhasil mempelajari pola dari data.
-- MAE pada data validasi cenderung stabil dan tidak menurun signifikan, yang dapat menjadi indikasi **overfitting**.
-- Meskipun model menunjukkan performa baik pada data pelatihan, generalisasi ke data baru masih dapat ditingkatkan.
+**Interpretasi Grafik:**
+- Train Loss (MSE): Terlihat menurun secara konsisten, menunjukkan bahwa model belajar dari data pelatihan dengan baik.
+- Val Loss (MSE): Relatif konstan di sekitar 0.46, mengindikasikan bahwa model belum mampu meningkatkan performa pada data validasi.
+- Train MAE: Menurun secara signifikan, menunjukkan penurunan rata-rata kesalahan absolut selama pelatihan.
+- Val MAE: Stabil di sekitar 0.61, menandakan kemungkinan overfitting, karena model tidak memperbaiki kinerjanya terhadap data yang belum dilihat.
 
 >  **Catatan:**  
 > Evaluasi pada pendekatan Collaborative Filtering saat ini hanya dilakukan menggunakan **MAE selama proses pelatihan dan validasi**, **tanpa pengujian eksplisit terhadap test set** atau penggunaan metrik alternatif seperti **RMSE**. Implementasi metrik tambahan masih menjadi pekerjaan lanjutan.
-
-----
-
-###  Content-Based Filtering – Evaluasi Relevansi Rekomendasi
-
-Untuk pendekatan Content-Based Filtering, digunakan metrik evaluasi berbasis **Top-K Recommendation** yang lebih sesuai dalam menilai kualitas hasil rekomendasi.
-
-####  Metrik Evaluasi:
-
-1. **Precision@K**  
-   Mengukur proporsi item yang relevan dalam K rekomendasi teratas.
-
-2. **Recall@K**  
-   Mengukur seberapa banyak item relevan yang berhasil ditemukan dari seluruh item relevan yang tersedia.
-
-3. **F1-Score@K**  
-   Kombinasi dari precision dan recall untuk menilai keseimbangan model.
-
-4. **MAP (Mean Average Precision)**  
-   Mengukur rata-rata presisi dari daftar rekomendasi untuk semua pengguna.
-
-5. **NDCG (Normalized Discounted Cumulative Gain)**  
-   Mempertimbangkan urutan item dalam rekomendasi dan menghitung relevansi secara terdiskon.
-
-####  Status Implementasi:
-> Saat ini, metrik top-K tersebut **belum dihitung secara langsung di notebook**. Seluruh metrik ini akan diimplementasikan pada tahap pengembangan berikutnya agar evaluasi lebih objektif dan akurat.
 
 ###  Evaluasi Terhadap Business Understanding
 
